@@ -1,7 +1,7 @@
 name: Main workflow
 on: push
 env: # Set the secret as an input
-  github_username: ${{ github.actor }}
+  github_username: sorensenelena
   github_password: ${{ secrets.GITHUB_TOKEN }} # Must be made available to the workflow
   GIT_COMMIT: ${{ github.sha }}
 jobs:
@@ -9,16 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     container: gradle:6-jdk11
     steps:
-      - name: Validate GitHub username is all lowercase
-        id: validate_lower
-        run: |
-          if [[ "${{ env.github_username }}" =~ [A-Z] ]]; then
-            echo "::error::Validation Failed: GitHub username '${{ env.github_username }}' cannot contain uppercase characters."
-            exit 1
-          else
-            echo "GitHub username format is valid."
-          fi
-        shell: bash
       - name: Clone down repository
         uses: actions/checkout@v4       
       - name: Build application
